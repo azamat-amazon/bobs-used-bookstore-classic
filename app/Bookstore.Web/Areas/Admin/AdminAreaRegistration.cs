@@ -1,24 +1,6 @@
-﻿using System.Web.Mvc;
 
 namespace Bookstore.Web.Areas
 {
-    public class AdminAreaRegistration : AreaRegistration 
-    {
-        public override string AreaName 
-        {
-            get 
-            {
-                return "Admin";
-            }
-        }
-
-        public override void RegisterArea(AreaRegistrationContext context) 
-        {
-            context.MapRoute(
-                "Admin_default",
-                "Admin/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }, namespaces: new[] { "Bookstore.Web.Areas.Admin.Controllers" }
-            );
-        }
-    }
+    // This file is now empty — the legacy MVC5 AreaRegistration class has been removed.
+    // The Admin area route is registered in Program.cs via MapAreaControllerRoute.
 }

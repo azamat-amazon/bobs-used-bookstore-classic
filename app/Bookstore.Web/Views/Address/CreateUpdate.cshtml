@@ -1,4 +1,4 @@
-﻿@model Bookstore.Web.ViewModel.Address.AddressCreateUpdateViewModel
+@model Bookstore.Web.ViewModel.Address.AddressCreateUpdateViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -30,7 +30,7 @@
         </div>
         <div class="form-group">
             <label asp-for="State">State</label>
-            @Html.DropDownListFor(model => model.State, Model.States, new { @class = "form-control" })
+            @Html.DropDownListFor(model => model.State, Model.States, "", new { @class = "form-control" })
             @Html.ValidationMessageFor(model => model.State, "", new { @class = "text-danger" })
         </div>
         <div class="form-group">
@@ -54,7 +54,5 @@
 </div>
 
 @section Scripts {
-    @{
-        Html.RenderPartial("_ValidationScriptsPartial");
-    }
+    <partial name="_ValidationScriptsPartial" />
 }

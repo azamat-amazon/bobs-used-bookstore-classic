@@ -1,4 +1,4 @@
-﻿@model Bookstore.Web.ViewModel.Home.HomeIndexViewModel
+@model Bookstore.Web.ViewModel.Home.HomeIndexViewModel
 
 @{
     ViewData["Title"] = "Home Page";
@@ -12,13 +12,13 @@
         <div class="about-content">
             <h2>Who We Are</h2>
             <p>                
-                Welcome to Bob’s Used Books, your online destination for finding great deals on pre-loved books of all genres and topics. 
-                Whether you’re looking for a classic novel, a rare edition, a textbook, or a cookbook, you'll find it here. 
+                Welcome to Bob's Used Books, your online destination for finding great deals on pre-loved books of all genres and topics. 
+                Whether you're looking for a classic novel, a rare edition, a textbook, or a cookbook, you'll find it here. 
             </p>
-            <p>You can also sell your own books to us and earn some extra cash. At Bob’s Used Books, we believe that every book deserves a second chance.</p>
+            <p>You can also sell your own books to us and earn some extra cash. At Bob's Used Books, we believe that every book deserves a second chance.</p>
             <p>Shop with us today and discover the joy of reading!</p>
             <div class="btn-sec">
-                @Html.ActionLink("Shop Books", "Index", "Search", new { area = "" }, new { @class = "btn black" })
+                <a asp-controller="Search" asp-action="Index" asp-area="" class="btn black">Shop Books</a>
             </div>
         </div>
     </section>
@@ -65,8 +65,8 @@
                 Start adding books to your wishlist today.
             </p>
             <div class="btn-sec">
-                @Html.ActionLink("Wish List", "Index", "Wishlist", new { area = "" }, new { @class = "btn black" })
-                @Html.ActionLink("Shop Books", "Index", "Search", new { area = "" }, new { @class = "btn black" })
+                <a asp-controller="Wishlist" asp-action="Index" asp-area="" class="btn black">Wish List</a>
+                <a asp-controller="Search" asp-action="Index" asp-area="" class="btn black">Shop Books</a>
             </div>
         </div>
         <div class="about-img">
@@ -117,7 +117,7 @@
                 If you wish to learn more about our privacy policy, check out our privacy policy page.
             </p>
             <div class="btn-sec">
-                @Html.ActionLink("Privacy", "Privacy", "Home", new { area = "" }, new { @class = "btn black" })
+                <a asp-controller="Home" asp-action="Privacy" asp-area="" class="btn black">Privacy</a>
             </div>
         </div>
     </section>

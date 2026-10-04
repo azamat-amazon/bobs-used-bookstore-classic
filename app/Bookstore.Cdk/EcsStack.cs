@@ -54,7 +54,7 @@ public class EcsStack : Stack
                 HealthCheckGracePeriod = Duration.Seconds(30),
                 TaskImageOptions = new ApplicationLoadBalancedTaskImageOptions
                 {
-                    Image = ContainerImage.FromAsset(".\\"),
+                    Image = ContainerImage.FromAsset("./"),
                     Environment = new Dictionary<string, string>
                     {
                             { "Services/Authentication", "local" }, //Can't use Cognito hosted UI without an https redirect.

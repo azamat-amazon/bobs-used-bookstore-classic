@@ -1,14 +1,14 @@
-﻿@model Bookstore.Web.Areas.Admin.Models.Inventory.InventoryIndexViewModel
+@model Bookstore.Web.Areas.Admin.Models.Inventory.InventoryIndexViewModel
 
 @{
     ViewData["Title"] = "Inventory";
 }
 
-@Html.Partial("_MessageBanner")
+<partial name="_MessageBanner" />
 
 <div class="d-flex m-3">
     <h5 class="me-auto">Inventory</h5>
-    @Html.ActionLink("New Book", "Create", new { controller = "Inventory"}, new { @class = "btn btn-primary" })
+    <a asp-area="Admin" asp-controller="Inventory" asp-action="Create" class="btn btn-primary">New Book</a>
 </div>
 
 <div class="card mx-3">
@@ -16,37 +16,45 @@
         <form class="row row-cols-lg-auto g-3 align-items-center" method="get">
             <div class="col-12">
                 <label class="visually-hidden" for="NameFilterInput">Name</label>
-                @Html.TextBoxFor(m => m.Filters.Name, new { placeholder = "Name", @class = "form-control", @id = "NameFilterInput" })
+                <input asp-for="Filters.Name" placeholder="Name" class="form-control" id="NameFilterInput" />
             </div>
 
             <div class="col-12">
                 <label class="visually-hidden" for="AuthorFilterInput">Author</label>
-                @Html.TextBoxFor(m => m.Filters.Author, new { placeholder = "Author", @class = "form-control", @id = "AuthorFilterInput" })
+                <input asp-for="Filters.Author" placeholder="Author" class="form-control" id="AuthorFilterInput" />
             </div>
 
             <div class="col-12">
                 <label class="visually-hidden" for="PublisherFilter">Publisher</label>
-                @Html.DropDownListFor(a => a.Filters.PublisherId, Model.Publishers, "All Publishers", new { @class = "form-select" })
+                <select asp-for="Filters.PublisherId" asp-items="Model.Publishers" class="form-select">
+                    <option value="">All Publishers</option>
+                </select>
             </div>
 
             <div class="col-12">
                 <label class="visually-hidden" for="GenreFilter">Genre</label>
-                @Html.DropDownListFor(a => a.Filters.GenreId, Model.Genres, "All Genres", new { @class = "form-select" })
+                <select asp-for="Filters.GenreId" asp-items="Model.Genres" class="form-select">
+                    <option value="">All Genres</option>
+                </select>
             </div>
 
             <div class="col-12">
                 <label class="visually-hidden" for="BookTypeFilter">Book type</label>
-                @Html.DropDownListFor(a => a.Filters.BookTypeId, Model.BookTypes, "All Book Types", new { @class = "form-select" })
+                <select asp-for="Filters.BookTypeId" asp-items="Model.BookTypes" class="form-select">
+                    <option value="">All Book Types</option>
+                </select>
             </div>
 
             <div class="col-12">
                 <label class="visually-hidden" for="ConditionFilter">Condition</label>
-                @Html.DropDownListFor(a => a.Filters.ConditionId, Model.BookConditions, "All Book Conditions", new { @class = "form-select" })
+                <select asp-for="Filters.ConditionId" asp-items="Model.BookConditions" class="form-select">
+                    <option value="">All Book Conditions</option>
+                </select>
             </div>
 
             <div class="col-12">
                 <div class="form-check">
-                    @Html.CheckBoxFor(a => a.Filters.LowStock, new { @class = "form-check-input" })
+                    <input asp-for="Filters.LowStock" class="form-check-input" />
                     <label class="form-check-label" for="LowStockCheckbox">
                         Low stock
                     </label>
@@ -58,7 +66,7 @@
             </div>
 
             <div class="col-12">
-                @Html.ActionLink("Clear", "Index", new { controller = "Inventory" }, new { @class = "btn btn-secondary" })
+                <a asp-area="Admin" asp-controller="Inventory" asp-action="Index" class="btn btn-secondary">Clear</a>
             </div>
         </form>
     </div>
@@ -67,7 +75,7 @@
 <div class="card m-3">
     <div class="card-header">
         <div class="d-flex justify-content-end">
-            @Html.Partial("_Paginator")
+            <partial name="_Paginator" />
         </div>
     </div>
 
@@ -103,9 +111,9 @@
                         <td>
                             <div class="hstack gap-2">
 
-                                @Html.ActionLink("View", "Details", new { controller = "Inventory", id = book.Id }, new { @class = "card-link" })                                
+                                <a asp-area="Admin" asp-controller="Inventory" asp-action="Details" asp-route-id="@book.Id" class="card-link">View</a>
                                 <div class="vr"></div>                               
-                                @Html.ActionLink("Update", "Update", new { controller = "Inventory", id = book.Id }, new { @class = "card-link" })
+                                <a asp-area="Admin" asp-controller="Inventory" asp-action="Update" asp-route-id="@book.Id" class="card-link">Update</a>
                             </div>
                         </td>
                     </tr>
@@ -116,7 +124,7 @@
 
     <div class="card-footer">
         <div class="d-flex justify-content-end">
-            @Html.Partial("_Paginator")
+            <partial name="_Paginator" />
         </div>
     </div>
 </div>
