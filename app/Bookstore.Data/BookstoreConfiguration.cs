@@ -1,34 +1,50 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Configuration;
+using System.IO;
+using System.Linq;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
 namespace BobsBookstoreClassic.Data
 {
     public sealed class BookstoreConfiguration
     {
         private static readonly Lazy<BookstoreConfiguration> Lazy = new Lazy<BookstoreConfiguration>(() => new BookstoreConfiguration());
-
         private static BookstoreConfiguration Instance => Lazy.Value;
 
         private readonly Dictionary<string, string> _appSettings = new Dictionary<string, string>();
         private readonly Dictionary<string, string> _connectionStrings = new Dictionary<string, string>();
-
         private BookstoreConfiguration()
         {
-            foreach (string key in ConfigurationManager.AppSettings)
-            {
-                _appSettings[key] = ConfigurationManager.AppSettings[key];
+        }
 
-                if (Environment.GetEnvironmentVariable(key) != null)
+        /// <summary>
+        /// Initializes the configuration from an <see cref="IConfiguration"/> source.
+        /// Call this once at application startup (e.g. in Program.cs) after building the host.
+        /// </summary>
+        // PORT-TODO
+        // {"note": "Call BookstoreConfiguration.Initialize(configuration) in Program.cs at startup after building IConfiguration. Long-term, callers of GetSetting/GetConnectionString should migrate to inject IConfiguration or IOptions<T> directly.", "files": ["Program.cs"]}
+        public static void Initialize(IConfiguration configuration)
+        {
+            foreach (var kvp in configuration.AsEnumerable())
+            {
+                if (kvp.Value != null)
                 {
-                    _appSettings[key] = Environment.GetEnvironmentVariable(key);
+                    Instance._appSettings[kvp.Key] = kvp.Value;
+                }
+                // Environment variables override config file values
+                if (Environment.GetEnvironmentVariable(kvp.Key) != null)
+                {
+                    Instance._appSettings[kvp.Key] = Environment.GetEnvironmentVariable(kvp.Key);
                 }
             }
 
-            foreach (ConnectionStringSettings connectionStringSettings in ConfigurationManager.ConnectionStrings)
+            var connectionStringsSection = configuration.GetSection("ConnectionStrings");
+            foreach (var child in connectionStringsSection.GetChildren())
             {
-                _connectionStrings[connectionStringSettings.Name] = connectionStringSettings.ConnectionString;
-
+                Instance._connectionStrings[child.Key] = child.Value;
             }
         }
 
@@ -45,7 +61,6 @@ namespace BobsBookstoreClassic.Data
         public static T GetSetting<T>(string key)
         {
             var value = Instance._appSettings[key];
-
             return (T)Convert.ChangeType(value, typeof(T));
         }
 
@@ -58,6 +73,5 @@ namespace BobsBookstoreClassic.Data
         {
             return Instance._connectionStrings[key];
         }
-
     }
 }
