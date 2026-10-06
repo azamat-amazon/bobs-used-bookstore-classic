@@ -1,0 +1,17 @@
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="hstack gap-2">
+        <a asp-controller="Address" asp-action="Index" asp-area="" class="nav-link text-dark me-2">Hello @User.Identity.Name!</a>
+
+        @if (User.IsInRole("Administrators"))
+        {
+            <a asp-controller="Dashboard" asp-action="Index" asp-area="Admin" class="nav-link text-dark">Admin Portal</a>
+            <div class="vr"></div>
+        }
+        <a asp-controller="Authentication" asp-action="LogOut" asp-area="" class="nav-link text-dark">Logout</a>
+    </div>
+}
+else
+{
+    <a asp-controller="Authentication" asp-action="Login" asp-area="" class="nav-link text-dark">Log in</a>
+}
